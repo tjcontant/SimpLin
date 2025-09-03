@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 library(SimpLin)
 ```
 
-Simple linear regression is the process of take a set of inputs $\boldsymbol{x}$ and relating them to a set out outputs $\boldsymbol{y}$ via a line. Consider the the following data.
+Simple linear regression is the process of taking a set of inputs $\boldsymbol{x}$ and relating them to a set out outputs $\boldsymbol{y}$ via a line. Consider the the following data.
 
 ```{r}
 # Generating data
@@ -29,13 +29,13 @@ y <- c(6, 8, 11, 12, 16, 21, 20, 22, 25, 35)
 cbind(x, y)
 ```
 
-It is not easy to see the relationship for the table above, other than y tends to increases as x increases. Let's plot the data for better visualization.
+It is not easy to see the relationship in the table above, other than $\boldsymbol{y}$ tends to increases as $\boldsymbol{x}$ increases. Let's plot the data for better visualization.
 
 ```{r}
 plot(x, y)
 ```
 
-Using `SimpLinR` we can fit a line to this data that minimizes the sum of quared residuals, plotted in red below.
+Using `SimpLinR()`, we can fit a line to this data that minimizes the sum of squared residuals, plotted in red below.
 
 ```{r}
 slr <- SimpLinR(x, y)
@@ -44,7 +44,7 @@ abline(slr$beta_0_hat, slr$beta_1_hat) # y-intercept and slope
 segments(x, y, x, slr$preds, col = "red", lwd = 2)
 ```
 
-Of course, the estimates for the y-intercept and slope are just that, estimates. If we were to collect more data or repeat the study, we would likely get different estimates. Therefore, we include uncertainty with our estimates. `SimpLinR()` provides standard errors and $95\%$ confidence intervals.
+Of course, the estimates for the y-intercept and slope are just that, estimates. If we were to collect more data or repeat the study, we would likely get different estimates. Therefore, we include uncertainty with our estimates; `SimpLinR()` provides standard errors and $95\%$ confidence intervals.
 
 ```{r}
 slr$se_beta_0
@@ -54,9 +54,9 @@ slr$ci_beta_0
 slr$ci_beta_1
 ```
 
-The confidence intervals indicate that the slop appears positive based on the data while, at a 95% confidence level, we would fail to reject the null hypothesis that the y-intercept is greater than zero.
+The confidence intervals indicate that the slope appears positive while, at a 95% confidence level, we would fail to reject the null hypothesis that the y-intercept is greater than zero.
 
-`SimpLinR()` runs on RccpArmadillo. This makes the the function faster than standard linear regression tools such as `lm()`. The C++ code is included below for reference.
+`SimpLinR()` runs on `RccpArmadillo`. This makes the the function faster than other linear regression tools such as `lm()`. The C++ code is included below for reference.
 
 ```
 #include "RcppArmadillo.h"
